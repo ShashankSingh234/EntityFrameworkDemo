@@ -8,6 +8,7 @@ namespace EntityFrameworkDemo.Models
 {
     public class EmployeeProject
     {
+        public int Id { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 

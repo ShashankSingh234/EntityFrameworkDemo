@@ -12,7 +12,7 @@ namespace EntityFrameworkDemo.DBContexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(@"Server=SHASHANK\SQLEXPRESS;Database=EmployeeDB;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
