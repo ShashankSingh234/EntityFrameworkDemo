@@ -21,7 +21,8 @@ namespace EntityFrameworkDemo.DBContexts
             modelBuilder.Entity<Employee>()
                 .HasOne<Department>(e => e.Department)
                 .WithMany(d => d.Employees)
-                .HasForeignKey(e => e.DepartmentId);
+                .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //One to One Relationship
             modelBuilder.Entity<Employee>()

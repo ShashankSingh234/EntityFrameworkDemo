@@ -11,7 +11,9 @@ class Program
         //CreateMasterData();
         //CreateRelatedEmployeeData();
         //ReadEmployeeData("Epm 1");
-        UpdateEmployeeData(1);
+        //UpdateEmployeeData(1);
+        //DeleteEmployeeData(2);
+        DeleteDepartmentWhoseIdIsUsedAsForeignKey(5);
         Console.WriteLine("Hello, World!");
     }
 
@@ -151,6 +153,44 @@ class Program
                 employee.DepartmentId = 5;
                 context.Update(employee);
                 context.SaveChanges();
+            }
+        }
+    }
+
+    static void DeleteEmployeeData(int employeeId)
+    {
+        using(var context = new EmployeeContext())
+        {
+            var employee = context.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+
+            if (employee == null)
+            {
+                Console.WriteLine("No record found");
+                return;
+            }
+            else
+            {
+                context.Remove(employee);
+                context.SaveChanges();
+            }
+        }
+    }
+
+    static void DeleteDepartmentWhoseIdIsUsedAsForeignKey(int deptId)
+    {
+        using (var context = new EmployeeContext())
+        {
+            var department = context.Departments.FirstOrDefault(e => e.Id == deptId);
+
+            if (department == null)
+            {
+                Console.WriteLine("No record found");
+                return;
+            }
+            else
+            {
+                context.Remove(department);
+                context.SaveChanges(); //Throws exception as delete is restricted if department is in use
             }
         }
     }
