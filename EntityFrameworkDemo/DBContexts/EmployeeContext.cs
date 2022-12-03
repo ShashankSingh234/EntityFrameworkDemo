@@ -27,7 +27,7 @@ namespace EntityFrameworkDemo.DBContexts
             modelBuilder.Entity<Employee>()
                 .HasOne<EmployeeAddress>(e => e.EmployeeAddress)
                 .WithOne(ea => ea.Employee)
-                .HasForeignKey<EmployeeAddress>(e => e.StudentId);
+                .HasForeignKey<EmployeeAddress>(e => e.EmployeeId);
 
             //Many to Many Relationship
             modelBuilder.Entity<EmployeeProject>()

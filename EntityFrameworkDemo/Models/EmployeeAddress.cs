@@ -17,6 +17,6 @@ namespace EntityFrameworkDemo.Models
 
         public Employee Employee { get; set; }
 
-        public int StudentId { get; set; }
+        public int EmployeeId { get; set; }
     }
 }
