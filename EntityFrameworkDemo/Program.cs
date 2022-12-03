@@ -1,14 +1,16 @@
 ﻿using EntityFrameworkDemo.DBContexts;
 using EntityFrameworkDemo.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace EntityFrameworkDemo;
 class Program
 {
     static void Main(string[] args)
     {
-        CreateMasterData();
-        CreateRelatedEmployeeData();
+        //CreateMasterData();
+        //CreateRelatedEmployeeData();
+        //ReadEmployeeData("Epm 1");
         Console.WriteLine("Hello, World!");
     }
 
@@ -96,6 +98,38 @@ class Program
             context.Add<Employee>(employee1);
             context.Add<Employee>(employee2);
             context.SaveChanges();
+        }
+    }
+
+    static void ReadEmployeeData(string employeeName)
+    {
+        using(var context = new EmployeeContext())
+        {
+            var employee = context.Employees.Where(e => e.FirstName + " " + e.LastName == employeeName).FirstOrDefault();
+            if (employee == null)
+            {
+                Console.WriteLine("No record found");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Employees details " + Newtonsoft.Json.JsonConvert.SerializeObject(employee));
+            }
+
+            //Explicit loading. Employee adress will be null because explicit loading is not implemented on address property.
+            var employeeExplicitLoading = context.Employees.Where(e => e.FirstName + " " + e.LastName == employeeName).FirstOrDefault();
+            if (employeeExplicitLoading != null)
+            {
+                context.Entry(employeeExplicitLoading).Reference(e => e.Department).Load();
+                context.Entry(employeeExplicitLoading).Collection(e => e.EmployeeProjects).Load();
+            }
+
+            //Eager loading
+            var employeeWithEagerLoading = context.Employees.Where(e => e.FirstName + " " + e.LastName == employeeName)
+                .Include(e => e.Department)
+                .Include(e => e.EmployeeAddress)
+                .Include(e => e.EmployeeProjects)
+                .FirstOrDefault();
         }
     }
 }
