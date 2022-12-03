@@ -11,6 +11,7 @@ class Program
         //CreateMasterData();
         //CreateRelatedEmployeeData();
         //ReadEmployeeData("Epm 1");
+        UpdateEmployeeData(1);
         Console.WriteLine("Hello, World!");
     }
 
@@ -130,6 +131,27 @@ class Program
                 .Include(e => e.EmployeeAddress)
                 .Include(e => e.EmployeeProjects)
                 .FirstOrDefault();
+        }
+    }
+
+    static void UpdateEmployeeData(int employeeId)
+    {
+        using(var context = new EmployeeContext())
+        {
+            var employee = context.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+
+            if(employee == null)
+            {
+                Console.WriteLine("No record found");
+                return;
+            }
+            else
+            {
+                employee.Designation = "HR";
+                employee.DepartmentId = 5;
+                context.Update(employee);
+                context.SaveChanges();
+            }
         }
     }
 }
