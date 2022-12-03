@@ -14,5 +14,9 @@ namespace EntityFrameworkDemo.Models
         public string State { get; set; }
         public int PostalCode { get; set; }
         public string Country { get; set; }
+
+        public Employee Employee { get; set; }
+
+        public int StudentId { get; set; }
     }
 }

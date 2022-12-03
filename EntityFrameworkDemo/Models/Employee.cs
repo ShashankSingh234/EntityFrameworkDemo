@@ -30,5 +30,9 @@ namespace EntityFrameworkDemo.Models
             get;
             set;
         }
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+        public EmployeeAddress EmployeeAddress { get; set; }
+        public ICollection<EmployeeProject> EmployeeProjects { get; set; }
     }
 }
